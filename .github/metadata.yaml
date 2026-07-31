@@ -1,0 +1,9 @@
+# .github/metadata.yaml
+description: "The Apple-client shell for Institute applications: SwiftUI scene and lifecycle binding over the engine-free application core."
+topics:
+  - foundations
+  - application
+  - swiftui
+homepage: "https://swift-institute.org"
+readme:
+  family: A

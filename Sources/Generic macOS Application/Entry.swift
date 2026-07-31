@@ -1,0 +1,25 @@
+// ===----------------------------------------------------------------------===//
+//
+// This source file is part of the swift-application-swiftui open source project
+//
+// Copyright (c) 2026 Coen ten Thije Boonkkamp and the swift-application-swiftui project authors
+// Licensed under Apache License v2.0
+//
+// See LICENSE for license information
+//
+// ===----------------------------------------------------------------------===//
+
+internal import Generic_macOS_Application_Composition
+
+/// The generic macOS application.
+///
+/// The whole executable. It names a runtime and hands the process to the shell;
+/// everything else — boot, registration, the boundary table, the run loop — is the
+/// shell's, and everything about *this* application is the composition target's.
+@main
+internal enum Entry {
+    @MainActor
+    internal static func main() {
+        Generic.Runtime.launch()
+    }
+}
