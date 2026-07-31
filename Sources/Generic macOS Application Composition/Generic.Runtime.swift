@@ -17,5 +17,9 @@ extension Generic {
     /// failure domain, how to boot, what to present — and every other question the
     /// application contract asks is already answered by
     /// ``Application/Runtime/Scene/Protocol``.
-    public enum Runtime {}
+    /// `Sendable` is declared here rather than left to the conformance in the
+    /// companion file: the scene contract refines a `Sendable` protocol, and Swift
+    /// requires an inherited `Sendable` conformance to occur in the same file as the
+    /// type it applies to.
+    public enum Runtime: Sendable {}
 }

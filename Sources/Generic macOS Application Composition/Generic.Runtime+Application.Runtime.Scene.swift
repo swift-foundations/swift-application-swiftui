@@ -24,7 +24,9 @@ extension Generic.Runtime: Application.Runtime.Scene.`Protocol` {
     /// The environment is accepted and ignored — deliberately. A real root reads it
     /// here, which is why it is passed in rather than read from the process: a test
     /// boots the same code against a snapshot it controls.
-    public static func boot(_ environment: Environment.Snapshot) async -> Generic.Root {
+    /// Module-qualified: SwiftUI exports an `Environment` property wrapper, so the
+    /// bare namespace is ambiguous wherever both are imported.
+    public static func boot(_ environment: Environment.Environment.Snapshot) async -> Generic.Root {
         Generic.Root()
     }
 

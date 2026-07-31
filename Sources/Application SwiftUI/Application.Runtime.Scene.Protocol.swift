@@ -11,8 +11,8 @@
 
 public import Dispatch
 public import Environment
-public import Synchronization
 public import SwiftUI
+public import Synchronization
 
 /// The lifecycle contract of a shell whose execution context is a SwiftUI scene host.
 ///
@@ -122,7 +122,11 @@ extension __ApplicationRuntimeSceneProtocol {
             // `do throws(Failure)` is required for the catch to bind `Failure`; an
             // unannotated `do` binds `any Error`.
             do throws(Failure) {
-                outcome = .success(try await boot(Environment.Snapshot.effective()))
+                // Module-qualified: SwiftUI exports an `Environment` property
+                // wrapper, so the bare namespace is ambiguous wherever both are
+                // imported. Qualifying at the use site is the sanctioned fix;
+                // renaming the namespace is not.
+                outcome = .success(try await boot(Environment.Environment.Snapshot.effective()))
             } catch {
                 outcome = .failure(error)
             }

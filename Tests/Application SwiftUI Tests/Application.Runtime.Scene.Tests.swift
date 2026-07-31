@@ -30,7 +30,7 @@ extension Application.Runtime.Scene {
         /// the seam exists by exercising it with a snapshot the test owns.
         @Test
         func bootComposesARootFromASuppliedEnvironment() async {
-            let root = await Generic.Runtime.boot(Environment.Snapshot([:]))
+            let root = await Generic.Runtime.boot(Environment.Environment.Snapshot([:]))
 
             #expect(root == Generic.Root())
         }
