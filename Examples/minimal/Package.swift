@@ -9,10 +9,6 @@ let package = Package(
         .iOS(.v26),
     ],
     products: [
-        .executable(
-            name: "generic-macos-application",
-            targets: ["Generic macOS Application"]
-        ),
         .library(
             name: "Generic macOS Application Composition",
             targets: ["Generic macOS Application Composition"]
@@ -25,25 +21,12 @@ let package = Package(
         // The example's whole domain-specific surface: the root and the runtime
         // conformance. Owned here, not by the parent library, because it composes
         // one example rather than describing the shell family the parent defines.
-        // Exposed as a library so both the SwiftPM executable below and the sibling
-        // Xcode app target — which must carry zero domain logic of its own — can
-        // depend on the same composition.
+        // Exposed as a library for the sibling Xcode app target, which carries the
+        // example's single @main entry and zero domain logic of its own.
         .target(
             name: "Generic macOS Application Composition",
             dependencies: [
                 .product(name: "Application SwiftUI", package: "swift-application-swiftui"),
-            ]
-        ),
-
-        // The shim, in full: names a runtime and hands the process to it. Kept as
-        // a plain SwiftPM executable for `swift run` on any platform SwiftPM
-        // targets directly; the Xcode app target beside this package is the same
-        // shim again, for platforms only Xcode can install and launch (the iOS
-        // Simulator).
-        .executableTarget(
-            name: "Generic macOS Application",
-            dependencies: [
-                "Generic macOS Application Composition",
             ]
         ),
 
