@@ -10,7 +10,6 @@
 // ===----------------------------------------------------------------------===//
 
 public import Application_SwiftUI
-public import Environment
 public import SwiftUI
 
 extension Generic.Runtime: Application.Runtime.Scene.`Protocol` {
@@ -24,9 +23,11 @@ extension Generic.Runtime: Application.Runtime.Scene.`Protocol` {
     /// The environment is accepted and ignored — deliberately. A real root reads it
     /// here, which is why it is passed in rather than read from the process: a test
     /// boots the same code against a snapshot it controls.
-    /// Module-qualified: SwiftUI exports an `Environment` property wrapper, so the
-    /// bare namespace is ambiguous wherever both are imported.
-    public static func boot(_ environment: Environment.Environment.Snapshot) async -> Generic.Root {
+    /// `EnvironmentSnapshot`, not `Environment.Snapshot`: SwiftUI's own `Environment`
+    /// property wrapper collides with the core's namespace at the same unqualified
+    /// name, so this file references the alias resolved once in `Application_SwiftUI`
+    /// rather than repeating the disambiguation — see `EnvironmentSnapshot.swift`.
+    public static func boot(_ environment: EnvironmentSnapshot) async -> Generic.Root {
         Generic.Root()
     }
 

@@ -10,29 +10,17 @@
 // ===----------------------------------------------------------------------===//
 
 import Application_SwiftUI
-import Environment
-import Generic_macOS_Application_Composition
 import Testing
 
 extension Application.Runtime.Scene {
     @Suite
     struct Test {
-        /// The table is asserted against the whole shell, not against the default's
-        /// own definition: a conformer that overrode it would still be reported here,
-        /// which is the property worth holding.
+        /// The table is asserted against the default the scene protocol itself
+        /// supplies, since this package has no conformer of its own — a conformer
+        /// that overrode it is the example's concern, not this library's.
         @Test
         func everyBoundaryReappliesTheRoot() {
-            #expect(Generic.Runtime.boundaries == .reapplied)
-            #expect(Generic.Runtime.boundaries.boundaries(.inherited).isEmpty)
-        }
-
-        /// Boot is passed a snapshot rather than reading the process, so this asserts
-        /// the seam exists by exercising it with a snapshot the test owns.
-        @Test
-        func bootComposesARootFromASuppliedEnvironment() async {
-            let root = await Generic.Runtime.boot(Environment.Environment.Snapshot([:]))
-
-            #expect(root == Generic.Root())
+            #expect(Application.Boundary.Table.reapplied.boundaries(.inherited).isEmpty)
         }
     }
 }

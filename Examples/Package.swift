@@ -2,38 +2,39 @@
 
 import PackageDescription
 
+// A nested package, so the examples stay off the shell's product surface entirely
+// while still being built from the same checkout. `.package(path: "..")` is the one
+// sanctioned path-form dependency — the same shape the ecosystem's nested test
+// packages use.
 let package = Package(
-    name: "swift-application-swiftui",
+    name: "swift-application-swiftui-examples",
     platforms: [
-        .macOS(.v26),
-        .iOS(.v26),
-        .tvOS(.v26),
-        .watchOS(.v26),
-        .visionOS(.v26)
+        .macOS(.v26)
     ],
     products: [
-        .library(
-            name: "Application SwiftUI",
-            targets: ["Application SwiftUI"]
+        .executable(
+            name: "counter",
+            targets: ["Counter"]
         ),
     ],
     dependencies: [
-        .package(url: "https://github.com/swift-foundations/swift-application.git", branch: "main"),
-        .package(url: "https://github.com/swift-foundations/swift-environment.git", branch: "main"),
+        .package(path: ".."),
     ],
     targets: [
+        // Everything about this application: its state, how it changes, what it
+        // renders, and what it is composed into.
         .target(
-            name: "Application SwiftUI",
+            name: "Counter Composition",
             dependencies: [
-                .product(name: "Application", package: "swift-application"),
-                .product(name: "Environment", package: "swift-environment"),
+                .product(name: "Application SwiftUI", package: "swift-application-swiftui"),
             ]
         ),
 
-        .testTarget(
-            name: "Application SwiftUI Tests",
+        // The shim. Generic, and identical to the one the empty application uses.
+        .executableTarget(
+            name: "Counter",
             dependencies: [
-                "Application SwiftUI",
+                "Counter Composition",
             ]
         ),
     ],

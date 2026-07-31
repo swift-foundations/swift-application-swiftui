@@ -122,11 +122,13 @@ extension __ApplicationRuntimeSceneProtocol {
             // `do throws(Failure)` is required for the catch to bind `Failure`; an
             // unannotated `do` binds `any Error`.
             do throws(Failure) {
-                // Module-qualified: SwiftUI exports an `Environment` property
-                // wrapper, so the bare namespace is ambiguous wherever both are
-                // imported. Qualifying at the use site is the sanctioned fix;
-                // renaming the namespace is not.
-                outcome = .success(try await boot(Environment.Environment.Snapshot.effective()))
+                // `EnvironmentSnapshot` (not `Environment.Snapshot`): SwiftUI exports
+                // its own `Environment` property wrapper at the same unqualified
+                // name, so even the module-qualified spelling is ambiguous from any
+                // file that also imports SwiftUI, as this one does. The alias is
+                // resolved once, in a file that does not import SwiftUI — see
+                // `EnvironmentSnapshot.swift`.
+                outcome = .success(try await boot(EnvironmentSnapshot.effective()))
             } catch {
                 outcome = .failure(error)
             }
