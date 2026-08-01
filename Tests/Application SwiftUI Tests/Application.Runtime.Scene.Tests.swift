@@ -19,7 +19,7 @@ extension Application.Runtime.Scene {
         /// supplies, since this package has no conformer of its own — a conformer
         /// that overrode it is the example's concern, not this library's.
         @Test
-        func everyBoundaryReappliesTheRoot() {
+        func `every boundary reapplies the root`() {
             #expect(Application.Boundary.Table.reapplied.boundaries(.inherited).isEmpty)
         }
     }
