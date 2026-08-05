@@ -11,26 +11,18 @@ on:
       - main
   workflow_dispatch:
 
+permissions:
+  actions: read
+  contents: read
+
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
-  # Build + test matrix — see swift-foundations/.github/.github/workflows/swift-ci.yml (layer wrapper)
-  #
-  # `platform-support: apple` is a platform-IDENTITY declaration, not a cost
-  # knob: this package is the Apple-client shell. Its whole surface is SwiftUI
-  # and AppKit, so Linux and Windows are excluded by what the package IS. The
-  # engine-free cores it composes (swift-application, swift-stores) carry the
-  # full matrix, which is where cross-platform coverage of this Goal lives.
   ci:
     uses: swift-foundations/.github/.github/workflows/swift-ci.yml@main
     with:
+      integrated-docs: true
       platform-support: apple
-    secrets: inherit
-
-  # DocC umbrella-catalog pipeline per [DOC-019a] — see
-  # swift-foundations/.github/.github/workflows/swift-docs.yml
-  docs:
-    uses: swift-foundations/.github/.github/workflows/swift-docs.yml@main
     secrets: inherit
