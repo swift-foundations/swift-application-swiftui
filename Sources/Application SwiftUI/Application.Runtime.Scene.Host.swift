@@ -40,7 +40,9 @@ extension Application.Runtime.Scene {
             do throws(Application.Composition.Error) {
                 self.root = try Runtime.root()
             } catch {
-                Swift.fatalError("the scene host started before the composition root was registered: \(error)")
+                Swift.fatalError(
+                    "the scene host started before the composition root was registered: \(error)"
+                )
             }
         }
     }

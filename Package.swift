@@ -9,13 +9,13 @@ let package = Package(
         .iOS(.v26),
         .tvOS(.v26),
         .watchOS(.v26),
-        .visionOS(.v26)
+        .visionOS(.v26),
     ],
     products: [
         .library(
             name: "Application SwiftUI",
             targets: ["Application SwiftUI"]
-        ),
+        )
     ],
     dependencies: [
         .package(url: "https://github.com/swift-foundations/swift-application.git", branch: "main"),
@@ -33,7 +33,7 @@ let package = Package(
         .testTarget(
             name: "Application SwiftUI Tests",
             dependencies: [
-                "Application SwiftUI",
+                "Application SwiftUI"
             ]
         ),
     ],
